@@ -38,8 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
 // ---------------------------------------------
 function valorCampo(id) {
   const el = document.getElementById(id);
-  const n = Number(el.value);
-  return isNaN(n) || n < 0 ? 0 : n;
+  const valor = el.value.trim();
+  if (valor === '') {
+    el.setCustomValidity('');
+    return 0;
+  }
+  const n = Number(valor);
+  if (!Number.isFinite(n) || n < 0) {
+    el.setCustomValidity('Informe um valor numérico igual ou maior que zero.');
+    el.reportValidity();
+    return null;
+  }
+  el.setCustomValidity('');
+  return n;
 }
 
 function formatarLitros(valor) {
